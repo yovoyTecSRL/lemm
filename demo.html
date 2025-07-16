@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AvatarCity - El Futuro de los Avatares 3D</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="/css/animations.css" rel="stylesheet">
+    <link href="/css/components.css" rel="stylesheet">
+    <link href="/css/demo.css" rel="stylesheet">
+    <style>
+        /* Estilos específicos para el iframe integrado */
+        .iframe-container {
+            position: relative;
+            width: calc(90vw);
+            height: calc(90vh);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .iframe-wrapper {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .iframe-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            pointer-events: none;
+            z-index: 1;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        .avatar-loading iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 10px;
+            display: block;
+            background: transparent;
+        }
+
+        /* Controles flotantes mejorados */
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Hero Section con imagen de fondo */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1676299081847-824916de030a?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(0, 255, 255, 0.1) 0%, 
+                transparent 25%, 
+                transparent 75%, 
+                rgba(255, 0, 255, 0.1) 100%
+            );
+            z-index: 2;
+            animation: heroGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.7; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .hero-title .glitch {
+            position: relative;
+            color: #00ffff;
+            text-shadow: 
+                0 0 5px #00ffff,
+                0 0 10px #00ffff,
+                0 0 15px #00ffff,
+                0 0 20px #00ffff;
+            animation: glitchText 3s infinite;
+        }
+
+        @keyframes glitchText {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 5px #00ffff,
+                    0 0 10px #00ffff,
+                    0 0 15px #00ffff,
+                    0 0 20px #00ffff;
+            }
+            50% { 
+                text-shadow: 
+                    0 0 5px #ff00ff,
+                    0 0 10px #ff00ff,
+                    0 0 15px #ff00ff,
+                    0 0 20px #ff00ff;
+                color: #ff00ff;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 400;
+            color: #b0b0b0;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            min-width: 200px;
+            z-index: 1;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Efecto liquid-glass base */
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0.1) 100%
+            );
+            border-radius: inherit;
+            z-index: -1;
+            transition: all 0.4s ease;
+        }
+
+        /* Reflejo dinámico */
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: all 0.6s ease;
+            z-index: 2;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        /* Efecto de ondas líquidas */
+        .btn {
+            position: relative;
+        }
+
+        .btn::before {
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 255, 255, 0.2) 0%,
+                rgba(255, 255, 255, 0.1) 30%,
+                rgba(255, 255, 255, 0.05) 60%,
+                transparent 100%
+            );
+            animation: liquidFlow 4s ease-in-out infinite;
+        }
+
+        @keyframes liquidFlow {
+            0%, 100% { 
+                background-position: 0% 0%;
+                transform: scale(1);
+            }
+            50% { 
+                background-position: 100% 100%;
+                transform: scale(1.02);
+            }
+        }
+
+        .btn-primary {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            box-shadow: 
+                0 8px 32px rgba(0, 255, 255, 0.3),
+                inset 0 1px 0 rgba(0, 255, 255, 0.2),
+                0 0 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .btn-primary::before {
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(0, 255, 255, 0.3) 0%,
+                rgba(0, 255, 255, 0.2) 30%,
+                rgba(0, 255, 255, 0.1) 60%,
+                transparent 100%
+            );
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background: rgba(0, 255, 255, 0.2);
+            border-color: rgba(0, 255, 255, 0.5);
+            box-shadow: 
+                0 12px 40px rgba(0, 255, 255, 0.4),
+                inset 0 1px 0 rgba(0, 255, 255, 0.3),
+                0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .btn-primary:hover::before {
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(0, 255, 255, 0.4) 0%,
+                rgba(0, 255, 255, 0.3) 30%,
+                rgba(0, 255, 255, 0.2) 60%,
+                transparent 100%
+            );
+            animation: liquidFlowHover 2s ease-in-out infinite;
+        }
+
+        @keyframes liquidFlowHover {
+            0%, 100% { 
+                background-position: 0% 0%;
+                transform: scale(1) rotate(0deg);
+            }
+            50% { 
+                background-position: 100% 100%;
+                transform: scale(1.05) rotate(1deg);
+            }
+        }
+
+        .btn-secondary {
+            background: rgba(255, 0, 255, 0.1);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            color: #ff00ff;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            box-shadow: 
+                0 8px 32px rgba(255, 0, 255, 0.3),
+                inset 0 1px 0 rgba(255, 0, 255, 0.2),
+                0 0 20px rgba(255, 0, 255, 0.1);
+        }
+
+        .btn-secondary::before {
+            background: radial-gradient(circle at 30% 30%, 
+                rgba(255, 0, 255, 0.3) 0%,
+                rgba(255, 0, 255, 0.2) 30%,
+                rgba(255, 0, 255, 0.1) 60%,
+                transparent 100%
+            );
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 0, 255, 0.2);
+            border-color: rgba(255, 0, 255, 0.5);
+            box-shadow: 
+                0 12px 40px rgba(255, 0, 255, 0.4),
+                inset 0 1px 0 rgba(255, 0, 255, 0.3),
+                0 0 30px rgba(255, 0, 255, 0.2);
+        }
+
+        .btn-secondary:hover::before {
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(255, 0, 255, 0.4) 0%,
+                rgba(255, 0, 255, 0.3) 30%,
+                rgba(255, 0, 255, 0.2) 60%,
+                transparent 100%
+            );
+            animation: liquidFlowHover 2s ease-in-out infinite;
+        }
+
+        /* Efecto de burbuja líquida */
+        .btn:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.4),
+                inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Efecto de ondas al hacer click */
+        .btn:active::before {
+            animation: liquidRipple 0.6s ease-out;
+        }
+
+        @keyframes liquidRipple {
+            0% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        /* Partículas líquidas flotantes */
+        .btn:hover {
+            position: relative;
+        }
+
+        .btn:hover::before {
+            background-size: 200% 200%;
+            animation: liquidParticles 3s ease-in-out infinite;
+        }
+
+        @keyframes liquidParticles {
+            0%, 100% { 
+                background-position: 0% 0%;
+                filter: blur(0px);
+            }
+            25% { 
+                background-position: 100% 0%;
+                filter: blur(1px);
+            }
+            50% { 
+                background-position: 100% 100%;
+                filter: blur(0px);
+            }
+            75% { 
+                background-position: 0% 100%;
+                filter: blur(1px);
+            }
+        }
+
+        /* Efecto de refracción */
+        .btn::before {
+            background-attachment: fixed;
+            background-blend-mode: overlay;
+        }
+
+        .btn:hover {
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .neon-pulse {
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            0% { 
+                box-shadow: 
+                    0 0 10px rgba(0, 255, 255, 0.4),
+                    0 4px 15px rgba(0, 255, 255, 0.3);
+            }
+            100% { 
+                box-shadow: 
+                    0 0 20px rgba(0, 255, 255, 0.8),
+                    0 4px 25px rgba(0, 255, 255, 0.6);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        .control-btn {
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            color: var(--primary-cyan, #00ffff);
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .fullscreen-btn {
+            background: rgba(255, 0, 255, 0.2);
+            border-color: rgba(255, 0, 255, 0.5);
+            color: var(--primary-magenta, #ff00ff);
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(255, 0, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .controls {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .control-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .avatar-loading iframe {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Controls -->
+    <div class="controls">
+        <button class="control-btn" onclick="reloadIframe()">🔄 Reload</button>
+        <button class="control-btn fullscreen-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+    </div>
+
+    <script>
+        // Hide loading overlay when iframe loads
+        function hideLoading() {
+            console.log('Avatar iframe loaded successfully');
+            // The iframe is now integrated into the avatar-loading section
+            // No need to hide overlay since it's replaced by the iframe
+        }
+
+        // Reload iframe
+        function reloadIframe() {
+            const iframe = document.getElementById('avatarFrame');
+            if (iframe) {
+                iframe.src = iframe.src;
+            }
+        }
+
+        // Toggle fullscreen
+        function toggleFullscreen() {
+            const iframe = document.getElementById('avatarFrame');
+            
+            if (!document.fullscreenElement) {
+                iframe.requestFullscreen().catch(err => {
+                    console.log('Error attempting to enable fullscreen:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Handle iframe communication
+        window.addEventListener('message', function(event) {
+            // Handle messages from the iframe if needed
+            if (event.origin !== window.location.origin) return;
+            
+            console.log('Message from iframe:', event.data);
+        });
+
+        // Prevent right-click context menu on iframe
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IFRAME') {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
+            

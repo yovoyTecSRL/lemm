@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre Mí | Luis Enrique Mata | Orbix Systems</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <!-- Navegación -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">Orbix Systems</a>
+      <ul class="nav-menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="about.html" class="active">Sobre Mí</a></li>
+        <li><a href="proyectos.html">Proyectos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header principal -->
+  <header>
+    <h1>Luis Enrique Mata</h1>
+    <p class="subtitle">Arquitecto de Soluciones IA | Visionario Tecnológico</p>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="main-two-columns">
+    <!-- Columna izquierda -->
+    <div class="left-column">
+      <div class="intro-text">
+        <p>Soy un creador de sistemas inteligentes y experiencias digitales. CEO de <span class="highlight">Orbix Systems</span>, fusiono la inteligencia artificial con automatización, diseño moderno y visión estratégica. No solo integro tecnología: <em>la creo, la adapto y la hago evolucionar</em>.</p>
+      </div>
+
+      <section class="section">
+        <h2>🔭 Qué hago</h2>
+        <ul>
+          <li>Desarrollo plataformas con <span class="highlight">IA aplicada</span> (GPT, visión, voz, RPA)</li>
+          <li>Integro sistemas empresariales inteligentes basados en <span class="highlight">Odoo</span></li>
+          <li>Construyo soluciones completas: <span class="highlight">frontend + backend + DevOps</span></li>
+          <li>Lidero proyectos de innovación en salud, banca y ciudades digitales</li>
+          <li>Diseño arquitecturas escalables con <span class="highlight">Docker, Kubernetes y Azure</span></li>
+          <li>Implemento automatización de procesos con <span class="highlight">GitHub Actions y CI/CD</span></li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>🚀 Proyectos Destacados</h2>
+        <ul>
+          <li><strong><a href="https://sistemasorbix.com/sentinel" style="color: #00ffff;">Orbix Sentinel</a>:</strong> Sistema de seguridad IA en tiempo real con interfaz Matrix</li>
+          <li><strong><a href="https://sistemasorbix.com/Validaciones" style="color: #00ffff;">Validación Financiera</a>:</strong> Plataforma bancaria con IA para decisiones crediticias</li>
+          <li><strong><a href="https://avatar.mimoto.express/" style="color: #00ffff;">Mimoto Express</a>:</strong> Sistema de envíos inteligente con optimización de rutas</li>
+          <li><strong><a href="/proyectos.html" style="color: #00ffff;">Ver todos los proyectos</a></strong></li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- Columna derecha -->
+    <div class="right-column">
+      <section class="section">
+        <h2>🛠️ Stack Tecnológico</h2>
+        <ul>
+          <li><span class="highlight">Backend:</span> Python, FastAPI, Node.js, PHP</li>
+          <li><span class="highlight">Frontend:</span> React, Vue.js, HTML5, CSS3, JavaScript</li>
+          <li><span class="highlight">IA & ML:</span> OpenAI GPT, TensorFlow, PyTorch, Computer Vision</li>
+          <li><span class="highlight">Bases de datos:</span> PostgreSQL, MongoDB, Redis</li>
+          <li><span class="highlight">Cloud & DevOps:</span> Azure, Docker, Kubernetes, GitHub Actions</li>
+          <li><span class="highlight">ERP & CRM:</span> Odoo, integraciones empresariales</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>🌎 Visión</h2>
+        <p>
+          Mi meta es construir una red de sistemas autónomos que se comuniquen, aprendan y evolucionen.
+          Apunto a posicionar <span class="highlight">Orbix</span> entre las plataformas más potentes de <span class="highlight">inteligencia empresarial autónoma</span> en Latinoamérica y más allá.
+        </p>
+        
+        <div class="quote">
+          "Diseño sistemas que piensan, actúan y evolucionan. Inteligencia real para negocios reales."
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>🎯 Metodología</h2>
+        <ul>
+          <li><span class="highlight">Desarrollo Ágil:</span> Iteraciones rápidas con feedback continuo</li>
+          <li><span class="highlight">Testing Automatizado:</span> Playwright, QUnit, pruebas nocturnas autónomas</li>
+          <li><span class="highlight">Arquitectura Modular:</span> Sistemas escalables y mantenibles</li>
+          <li><span class="highlight">IA Aplicada:</span> Soluciones prácticas, no solo conceptos</li>
+          <li><span class="highlight">Documentación Viva:</span> Código autodocumentado y procesos claros</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <div class="cta-section">
+    <h2>¿Listo para innovar juntos?</h2>
+    <p>Transformemos tu visión en realidad tecnológica</p>
+    <a href="contacto.html" class="cta-button">Contáctame</a>
+    <a href="proyectos.html" class="cta-button">Ver Proyectos</a>
+  </div>
+
+  <div class="footer">
+    <p>© 2025 YoVoyTech Systems | Orbix Platform - Construyendo el futuro con IA</p>
+  </div>
+
+  <script>
+    // Menú hamburguesa para móviles
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    // Cerrar menú al hacer click en un enlace
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
